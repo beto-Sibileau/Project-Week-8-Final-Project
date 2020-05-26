@@ -15,6 +15,11 @@ dataset
 papers_source
 images
 
+# ignore notebooks draft
+tjerk_iris.ipynb
+tjerk_pipeline.ipynb
+check_kPCA.ipynb
+
 
 # IPython
 profile_default/
