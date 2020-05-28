@@ -65,7 +65,7 @@ The first step we worked on data is the feature extraction for future Machine Le
 
 Starting with Principal Component Analysis (PCA), we achieved an outstanding dimensionality reduction over the whole dataset, as described by the evolution of accumulated *explained variance* of data with respect to the number of PCA components. For example, taking only 50 PCA components, we account for $94\%$ of the explained variance in the original dataset, which in turn means only a $0.16\%$ of the original dataset complexity.
 
-<img src="../images/pca_50.png" width="600" />
+<img src="./images/pca_50.png" width="600" />
 
 Regarding kernel-PCA, we don't have a direct meassure of its performance like the PCA *explained* variance. Instead, we simply use the same number of components predicted by PCA and in addition, we must tune its parameter $\gamma_{kpca}$ performance inside the Machine Learning hyper-parameter tuning phase.
 
@@ -82,7 +82,7 @@ Regarding kernel-PCA, we don't have a direct meassure of its performance like th
 
 We select the Supported Vector Classifier (SVC) algorithm that is able to perform complex nonlinear decision boundaries for classification using Radial Basis Functions (RBF). This comes however at the expense of tuning two parameters $C$ and $\gamma$. The Machine Learning workflow is handle following the scheme depicted below:
 
-<img src="../images/ML_workflow.png" width="350" />
+<img src="./images/ML_workflow.png" width="350" />
 
 Hyper-parameter tuning is shadowed in red on the left-hand side and the following ingredients are worth to be noted:
 
