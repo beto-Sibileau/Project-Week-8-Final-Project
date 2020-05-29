@@ -36,7 +36,7 @@ Frame your hypothesis with statistical/data languages (i.e. define Null and Alte
 -->
 
 ## Dataset
-The research question is workout using the Extended Yale Face Database B, which is described in this [link](http://vision.ucsd.edu/~iskwak/ExtYaleDatabase/ExtYaleB.html) to the UCSD Computer Vision group. This dataset in its cropped version could be downloaded directly [here](http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip). It contains images of 38 people under 64 different ilumination conditions, and discarding the corrupted photos, it accounts for 2414 different entries. All these image data is aligned, which makes it suitable for testing Machine Learning face classification algorithms. All images are grey-scaled and sized 168x192 pixels, which account for a total number of 32256 features in the dataset. The fact that there is a much higher number of features with respect to data entries - $32256 >>> 2414$ - shows the high dimensionality of the dataset.
+The research question is workout using the Extended Yale Face Database B, which is described in this [link](http://vision.ucsd.edu/~iskwak/ExtYaleDatabase/ExtYaleB.html) to the UCSD Computer Vision group. This dataset in its cropped version could be downloaded directly [here](http://vision.ucsd.edu/extyaleb/CroppedYaleBZip/CroppedYale.zip). It contains images of 38 people under 64 different ilumination conditions, and discarding the corrupted photos, it accounts for 2414 different entries. All these image data is aligned, which makes it suitable for testing Machine Learning face classification algorithms. All images are grey-scaled and sized 168x192 pixels, which account for a total number of 32256 features in the dataset. The fact that there is a much higher number of features with respect to data entries - $32256 >>> 2414$ - shows the high dimensionality of the dataset. Note that the number of images per person in the database is the same, and despite some discarded corrupted images, the dataset is almost perfectly balanced.
 
 <!---
 * Where did you get your data? If you downloaded a dataset (either public or private), describe where you downloaded it and include the command to load the dataset.
@@ -88,35 +88,32 @@ Hyper-parameter tuning is shadowed in red on the left-hand side and the followin
 
 * Dimensionality reduction allows us to perform the tuning using a very low number of components, $n_{mathrm{comp}}=10$ only. Although the accuracy of original data representation is lowered, it is sufficient for the model to tune their parameters at an increased speed.
 * When using PCA as feature extraction, we only need to train the set of parameters of the SVC classifier: $\{C,\gamma\}$. When k-PCA is used instead, we are required to add an extra parameter in the tuning set on top of the SVC classifier: $\{\gamma_{kpca},C,\gamma\}$
+* For cross-validations and the final train/test split, we use a `StratifiedShuffleSplit` that ensures that the balance of all the multi-labels from the target in the original dataset is kept on the different samples required for analysis.
+* For the k-PCA parameter $\gamma_{kpca}$ we could get an initial guess based on the following study: [Q. Wang (2020), 'Kernel PCA and Pre-Image Reconstruction'](https://es.mathworks.com/matlabcentral/fileexchange/39715-kernel-pca-and-pre-image-reconstruction). The hyper-parameter tuning is built on a grid-search cross-validation `GridSearchCV`, and is performed iteratively until the optimal parameters don't lie on the grid boundaries as depicted below:
 
+<img src="./images/sphx_glr_plot_rbf_parameters_002.png" width="400" />
 
-This speeds up the process 
+Once the hyper-parameter tuning is completed, the final model training and evaluation is performed using a reduced dataset with $n_{mathrm{comp}}=50$ components. In the figure below we show the results of a sample of test inputs (faces) compared to their predicted face label and indicating if the prediction was performed Good or False. The shown results are performed with a model that uses *k*-PCA dimensionality reduction. As observed, the False prediction is associated with a very low lightning condition.
 
+<img src="./images/predic_test.png" width="500" />
 
-
-handle following
-in the Machine Learning
-
-
-At their expense, we need to train two additional parameters
-
-
+The mean cross-validation accuracy achieved for the multi-face classification is **90%** for the model using PCA and **92%** for the model using *k*-PCA. It is worth to note that these accuracies are obtained in a model that uses only $0.2%$ of the original data in terms of size. The dimensionality reduction achieved for this database is huge.
 
 <!---
 *Include this section only if you chose to include ML in your project.*
 * Describe how you trained your model, the results you obtained, and how you evaluated those results.
 -->
 
-
-
-
 ## Conclusion
-* Summarize your results. What do they mean?
-* What can you say about your hypotheses?
-* Interpret your findings in terms of the questions you try to answer.
+* For the multi-label (38 people) Face Classification using SVM Machine Learning we achieve:
+    * A mean cross-validation accuracy of 90% for PCA and 92% for *k*-PCA.
+    * An outstanding 98% of Dimensionality Reduction (that corresponds to 94% of explained variance for PCA)
 
 ## Future Work
-Address any questions you were unable to answer, or any next steps or future extensions to your project.
+* Future extensions to this project will be a Face Classification applied to fake or manipulated identities.
+* Two questions that remain to be answered are:
+    * Where are the limits of the present approach (e.g: in terms of database sizes)?
+    * When does trendy approaches like Convolutional Neural Networks really pay off for Image Classification problems?
 
 ## Workflow
 Outline the workflow you used in your project. What were the steps?
@@ -124,13 +121,11 @@ How did you test the accuracy of your analysis and/or machine learning algorithm
 
 ## Organization
 How did you organize your work? Did you use any tools like a trello or kanban board?
-
 What does your repository look like? Explain your folder and file structure.
 
 ## Links
 Include links to your repository, slides and trello/kanban board. Feel free to include any other links associated with your project.
 
-
-[Repository](https://github.com/)  
-[Slides](https://slides.com/)  
-[Trello](https://trello.com/en)  
+[Repository](https://github.com/beto-Sibileau/Project-Week-8-Final-Project/tree/master/your-project/my-code)  
+[Slides](https://drive.google.com/drive/folders/1pz92WSVf1cDaZudul5rdif4dl8j1B7Fo?usp=sharing)  
+[Trello](https://trello.com/b/PMuuQ4qD/final-project-ironhack-machine-learning)  
